@@ -3,9 +3,10 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from flask import current_app as app
-from flask import jsonify, request
+from flask import request
 
 from ....database.models import Car, CarSchema
+from ....helpers import snake_case_keys
 
 
 def get_car_data(url):
@@ -27,6 +28,7 @@ def scrape_car():
         url = "https://www.carforyou.ch/en/auto/saloon/vw/passat/20-bluetdi-comfortline-dsg-214965"
 
     car = get_car_data(url)
+    car = snake_case_keys(car)
     car = Car(data=car, **car)
 
     car_schema = CarSchema()
