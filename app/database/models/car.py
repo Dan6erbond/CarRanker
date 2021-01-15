@@ -1,6 +1,7 @@
 import enum
 
 from ..db import db
+from ...exts.ma import ma
 
 from .base import Base
 
@@ -79,3 +80,32 @@ class Car(Base):
     scores = db.relationship("CarScore")
 
     data = db.Column(db.Text, nullable=False)
+
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+class CarSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Car
+
+    id = ma.auto_field()
+    url = ma.auto_field()
+    model = ma.auto_field()
+    variant = ma.auto_field()
+    type_full = ma.auto_field()
+    price = ma.auto_field()
+
+    horse_power = ma.auto_field()
+    cylinders = ma.auto_field()
+    first_registration_year = ma.auto_field()
+    registration_date = ma.auto_field()
+    transmission_type = ma.auto_field()
+    fuel_type = ma.auto_field()
+    body_type = ma.auto_field()
+    seats = ma.auto_field()
+    doors = ma.auto_field()
+    drive_type = ma.auto_field()
+    mileage = ma.auto_field()
+    consumption_combined = ma.auto_field()
+
+    data = ma.Dict()
