@@ -138,6 +138,7 @@ dmypy.json
 cython_debug/
 
 # Custom
+tmp/data.db
 *.json
 *.html
 
