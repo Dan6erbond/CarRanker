@@ -138,6 +138,8 @@ dmypy.json
 cython_debug/
 
 # Custom
-/*.json
-/*.html
-/*.txt
+*.json
+*.html
+
+*.txt
+!requirements.txt
