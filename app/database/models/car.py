@@ -74,7 +74,7 @@ class DriveType(enum.Enum):
     @staticmethod
     def get_drive_type(value):
         for body_type in DriveType:
-            if body_type.value == value:
+            if body_type.value == value.lower():
                 return body_type
 
         if value == "front":
