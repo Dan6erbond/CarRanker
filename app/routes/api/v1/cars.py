@@ -1,3 +1,4 @@
+from app.database.models.make_alias import MakeAlias
 import json
 import re
 from datetime import date, datetime
@@ -29,17 +30,18 @@ def get_car_data(url):
         data = data["props"]["pageProps"]["listing"]
         data = snake_case_keys(data)
 
-        first_registration_date = datetime(
-            data["first_registration_date"]["year"],
-            data["first_registration_date"]["month"],
-            1)
+        if data.get("first_registration_date", None):
+            first_registration_date = datetime(
+                data["first_registration_date"]["year"],
+                data["first_registration_date"]["month"],
+                1)
+            data["first_registration_date"] = first_registration_date
 
-        data["first_registration_date"] = first_registration_date
         data["body_type"] = BodyType.get_body_type(data["body_type"]).value
         data["drive_type"] = DriveType.get_drive_type(data["drive_type"]).value
         data["transmission_type"] = TransmissionType.get_transmission_type(data["transmission_type"]).value
         data["fuel_type"] = FuelType.get_fuel_type(data["fuel_type"]).value
-        data["variant"] = data["type"].replace(data["make"]).strip()
+        data["variant"] = data["type"].replace(data["make"], "").strip()
 
         return data, raw_data
 
@@ -81,7 +83,7 @@ def get_car_data(url):
             data[obj["id"]] = obj["value"]
 
         data["make"] = data["brand"]
-        data["variant"] = data["subject"].replace(data["make"]).strip()
+        data["variant"] = data["subject"].replace(data["make"], "").strip()
         data["transmission_type"] = TransmissionType.get_transmission_type(data["gearbox"]).value
         data["fuel_type"] = FuelType.get_fuel_type(data["fuel"]).value
         data["first_registration_year"] = int(data["regdate"])
@@ -94,8 +96,10 @@ def get_car_data(url):
 
     return None, None
 
+
 car_input = api.model("CarInput", {
-    "url": fields.String(description="A URL to the car listing.", required=True)
+    "url": fields.String(description="A URL to the car listing.", required=True),
+    "make_id": fields.Integer(description="The ID to the car make in case aliases should be created or used.", required=False),
 })
 
 
@@ -111,13 +115,36 @@ class CarsController(Resource):
     def post(self):
         url = api.payload["url"]
 
+        car = Car.query.filter(Car.url == url).first()
+        if car:
+            return {
+                "error": "This car has already been added to the database."
+            }
+
         data, raw_data = get_car_data(url)
 
-        make = Make.query.filter(Make.name == data["make"]).first()
-        if not make:
-            make = Make(name=data["make"])
-            db.session.add(make)
-        make = Make.query.filter(Make.name == data["make"]).first()
+        if "make_id" in api.payload:
+            make: Make = Make.query.filter(Make.id == api.payload["make_id"]).first()
+
+            if make.name != data["make"]:
+                for alias in make.aliases:
+                    if alias.name == data["make"]:
+                        break
+                else:
+                    make_alias = MakeAlias(name=data["make"], make=make)
+                    db.session.add(make_alias)
+                    db.session.commit()
+        else:
+            make = Make.query.filter(Make.name == data["make"]).first()
+
+            if not make:
+                make_alias: MakeAlias = MakeAlias.query.filter(MakeAlias.name == data["make"]).first()
+                if make_alias:
+                    make = make_alias.make
+                else:
+                    make = Make(name=data["make"])
+                    db.session.add(make)
+                    db.session.commit()
 
         del data["make"]
         data["make_id"] = make.id
@@ -130,6 +157,10 @@ class CarsController(Resource):
                 return o.isoformat()
 
         car_schema = CarSchema()
+
+        if "id" in data:
+            del data["id"]
+
         car = Car(
             data=json.dumps(raw_data, default=default),
             url=url,
