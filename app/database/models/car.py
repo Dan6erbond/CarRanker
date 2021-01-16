@@ -77,9 +77,11 @@ class DriveType(enum.Enum):
             if body_type.value == value.lower():
                 return body_type
 
+        if value == "all":
+            return DriveType.awd
         if value == "front":
             return DriveType.fwd
-        elif value == "back":
+        if value == "back":
             return DriveType.rwd
 
     def __str__(self):
