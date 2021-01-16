@@ -1,5 +1,10 @@
-from .base import Base
+from typing import TYPE_CHECKING, List
+
 from ..db import db
+from .base import Base
+
+if TYPE_CHECKING:
+    from .make_alias import MakeAlias
 
 
 class Make(Base):
@@ -8,4 +13,4 @@ class Make(Base):
 
     name = db.Column(db.String(64), nullable=False)
     cars = db.relationship("Car")
-    aliases = db.relationship("MakeAlias")
+    aliases: List["MakeAlias"] = db.relationship("MakeAlias")
