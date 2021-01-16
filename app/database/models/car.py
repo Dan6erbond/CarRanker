@@ -1,8 +1,11 @@
 import enum
 
-from ..db import db
-from ...exts.ma import ma
+from marshmallow import fields
+from marshmallow_enum import EnumField
+from marshmallow_sqlalchemy import SQLAlchemySchema
 
+from ...exts.ma import Json, ma
+from ..db import db
 from .base import Base
 
 
@@ -11,10 +14,16 @@ class TransmissionType(enum.Enum):
     automatic_cvt = "automatic_cvt"
     manual = "manual"
 
+    def __str__(self):
+        return self.value
+
 
 class FuelType(enum.Enum):
     gasoline = "gasoline"
     diesel = "diesel"
+
+    def __str__(self):
+        return self.value
 
 
 class BodyType(enum.Enum):
@@ -27,11 +36,37 @@ class BodyType(enum.Enum):
     station_wagon = "station_wagon"
     convertible = "convertible"
 
+    @staticmethod
+    def get_body_type(value):
+        for body_type in BodyType:
+            if body_type.value == value:
+                return body_type
+
+        if value == "saloon":
+            return BodyType.sedan
+
+    def __str__(self):
+        return self.value
+
 
 class DriveType(enum.Enum):
     awd = "awd"
     fwd = "fwd"
     rwd = "rwd"
+
+    @staticmethod
+    def get_drive_type(value):
+        for body_type in DriveType:
+            if body_type.value == value:
+                return body_type
+
+        if value == "front":
+            return DriveType.fwd
+        elif value == "back":
+            return DriveType.rwd
+
+    def __str__(self):
+        return self.value
 
 
 class Car(Base):
@@ -84,7 +119,8 @@ class Car(Base):
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
-class CarSchema(ma.SQLAlchemySchema):
+
+class CarSchema(SQLAlchemySchema):
     class Meta:
         model = Car
 
@@ -99,13 +135,13 @@ class CarSchema(ma.SQLAlchemySchema):
     cylinders = ma.auto_field()
     first_registration_year = ma.auto_field()
     first_registration_date = ma.auto_field()
-    transmission_type = ma.auto_field()
-    fuel_type = ma.auto_field()
-    body_type = ma.auto_field()
+    transmission_type = EnumField(TransmissionType, by_value=True)
+    fuel_type = EnumField(FuelType, by_value=True)
+    body_type = EnumField(BodyType, by_value=True)
     seats = ma.auto_field()
     doors = ma.auto_field()
-    drive_type = ma.auto_field()
+    drive_type = EnumField(DriveType, by_value=True)
     mileage = ma.auto_field()
     consumption_combined = ma.auto_field()
 
-    data = ma.Dict()
+    data = Json()
