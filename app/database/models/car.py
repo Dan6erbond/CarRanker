@@ -17,6 +17,15 @@ class TransmissionType(enum.Enum):
     def __str__(self):
         return self.value
 
+    @staticmethod
+    def get_transmission_type(value):
+        for transmission_type in TransmissionType:
+            if transmission_type.value == value.lower():
+                return transmission_type
+
+        if value == "Automat":
+            return TransmissionType.automatic
+
 
 class FuelType(enum.Enum):
     gasoline = "gasoline"
