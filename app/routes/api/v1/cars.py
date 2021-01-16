@@ -22,6 +22,28 @@ def get_car_data(url):
         return data["props"]["pageProps"]["listing"]
 
 
+car_fields = api.model("Car", {
+    "id": fields.Integer,
+    "url": fields.String,
+    "model": fields.String,
+    "variant": fields.String,
+    "type_full": fields.String,
+    "price": fields.Integer,
+    "horse_power": fields.Integer,
+    "cylinders": fields.Integer,
+    "first_registration_year": fields.Integer,
+    "first_registration_date": fields.Date,
+    "transmission_type": fields.String,
+    "fuel_type": fields.String,
+    "body_type": fields.String,
+    "seats": fields.Integer,
+    "doors": fields.Integer,
+    "drive_type": fields.String,
+    "mileage": fields.Integer,
+    "consumption_combined": fields.Integer,
+})
+
+
 @api.route("/cars")
 class CarsController(Resource):
     def get(self):
