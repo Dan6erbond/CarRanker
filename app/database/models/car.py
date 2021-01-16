@@ -54,10 +54,12 @@ class BodyType(enum.Enum):
     @staticmethod
     def get_body_type(value):
         for body_type in BodyType:
-            if body_type.value == value:
+            if body_type.value == value.lower():
                 return body_type
 
         if value == "saloon":
+            return BodyType.sedan
+        if value == "Limousine":
             return BodyType.sedan
 
     def __str__(self):
