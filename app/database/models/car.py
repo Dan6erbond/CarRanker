@@ -34,6 +34,12 @@ class FuelType(enum.Enum):
     def __str__(self):
         return self.value
 
+    @staticmethod
+    def get_fuel_type(value):
+        for fuel_type in FuelType:
+            if fuel_type.value == value.lower():
+                return fuel_type
+
 
 class BodyType(enum.Enum):
     sedan = "sedan"
