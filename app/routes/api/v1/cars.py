@@ -1,3 +1,5 @@
+from app.database.models.car_image import CarImage
+from app.database.models.image import Image
 from app.database.models.make_alias import MakeAlias
 import json
 import re
@@ -43,7 +45,12 @@ def get_car_data(url):
         data["fuel_type"] = FuelType.get_fuel_type(data["fuel_type"]).value
         data["variant"] = data["type"].replace(data["make"], "").strip()
 
-        return data, raw_data
+        images = list()
+        for image in data["images"]:
+            images.append("https://images.carforyou.ch/" + image["s3Key"])
+        del data["images"]
+
+        return data, raw_data, images
 
     if url.startswith("https://www.tutti.ch/"):
         page = requests.get(url)
@@ -92,9 +99,12 @@ def get_car_data(url):
         data["price"] = int("".join(s for s in data["price"] if s.isdigit()))
         data["mileage"] = int("".join(s for s in next(iter(data["mileage"].split("-"))) if s.isdigit()))
 
-        return data, raw_data
+        images = list()
+        for image in data["image_names"]:
+            images.append("https://c.tutti.ch/images/" + image)
+        del data["image_names"]
 
-    return None, None
+        return data, raw_data, images
 
 
 car_input = api.model("CarInput", {
@@ -121,7 +131,7 @@ class CarsController(Resource):
                 "error": "This car has already been added to the database."
             }
 
-        data, raw_data = get_car_data(url)
+        data, raw_data, images = get_car_data(url)
 
         if "make_id" in api.payload:
             make: Make = Make.query.filter(Make.id == api.payload["make_id"]).first()
@@ -149,9 +159,6 @@ class CarsController(Resource):
         del data["make"]
         data["make_id"] = make.id
 
-        if "images" in data:
-            del data["images"]
-
         def default(o):
             if isinstance(o, (date, datetime)):
                 return o.isoformat()
@@ -165,6 +172,14 @@ class CarsController(Resource):
             data=json.dumps(raw_data, default=default),
             url=url,
             **data)
+
+        for image in images:
+            img = Image(url=image)
+            db.session.add(img)
+            db.session.commit()
+            car_img = CarImage(image=img, car=car)
+            db.session.add(car_img)
+            db.session.commit()
 
         db.session.add(car)
         db.session.commit()
