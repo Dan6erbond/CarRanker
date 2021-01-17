@@ -2,7 +2,7 @@ import os
 import shutil
 
 import requests
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 from slugify import slugify
 
 from app import create_app
@@ -15,7 +15,7 @@ def create_collage(width, height, images):
     thumbnail_width = width // cols
     thumbnail_height = height // rows
     size = thumbnail_width, thumbnail_height
-    new_im = Image.new('RGB', (width, height))
+    new_im = Image.new('RGB', (width, height), "#fff")
     ims = []
     for p in images:
         im = Image.open(p)
@@ -37,7 +37,24 @@ def create_collage(width, height, images):
     return new_im
 
 
+def add_corners(im, rad):
+    circle = Image.new('L', (rad * 2, rad * 2), 0)
+    draw = ImageDraw.Draw(circle)
+    draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
+    alpha = Image.new('L', im.size, 255)
+    w, h = im.size
+    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    im.putalpha(alpha)
+    return im
+
+
 app = create_app()
+title = ImageFont.truetype("arial.ttf", 14)
+body = ImageFont.truetype("arial.ttf", 12)
+subtitle = ImageFont.truetype("arial.ttf", 11)
 
 with app.app_context():
     cars = Car.query.all()
@@ -58,9 +75,29 @@ with app.app_context():
                 shutil.copyfileobj(r.raw, f)
 
         name = car.type_full or car.variant
-        filepath = "assets/" + slugify(car.make.name + " " + name) + ".jpg"
+        filepath = "assets/" + slugify(f"{car.make.name} {name}") + ".png"
         try:
-            collage = create_collage(300, 300, filepaths)
+            org_collage = create_collage(300, 300, filepaths)
+
+            collage = Image.new('RGB', (300, 450), (255, 255, 255))
+            draw = ImageDraw.Draw(collage)
+
+            draw.text((10, 20), f"{car.make.name} {name}", (0, 0, 0), font=title)
+
+            collage.paste(org_collage, (0, 50))
+
+            draw.text((10, 350 + 10 + 0 * 20),
+                      f"{car.horse_power} HP / {car.consumption_combined} l/km", (0, 0, 0),
+                      font=body)
+            draw.text((10, 350 + 10 + 1 * 20), f"{car.price} CHF", (0, 0, 0), font=body)
+            draw.text((10, 350 + 10 + 2 * 20), f"{car.doors} doors / {car.seats} seats", (0, 0, 0), font=body)
+            draw.text((10, 350 + 10 + 3 * 20), car.drive_type.value, (0, 0, 0), font=body)
+
+            draw.text((200, 420), "CarMaker, 2021", (0, 0, 0), font=subtitle)
+
+            collage = add_corners(collage, 15)
+
             collage.save(filepath)
+            print("Successfully exported", filepath)
         except Exception as e:
             print(e)
