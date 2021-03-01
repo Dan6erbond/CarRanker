@@ -145,4 +145,4 @@ tmp/data.db
 *.txt
 !requirements.txt
 
-assets/*
+assets/
