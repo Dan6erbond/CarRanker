@@ -10,3 +10,7 @@ services:
       - "5000:5000"
     volumes:
       - ./processing-service:/app
+      - assets:/app/assets
+
+volumes:
+  assets:
