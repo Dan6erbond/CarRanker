@@ -3,11 +3,14 @@ version: "3"
 services:
   db:
     image: postgres
+    ports:
+      - "5432:5432"
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_USER: postgres
+      POSTGRES_DB: car_ranker
     secrets:
       - postgres_password
   processing-service:
@@ -15,11 +18,17 @@ services:
     build:
       context: ./processing-service
       dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: car_ranker
     ports:
       - "5000:5000"
     volumes:
       - ./processing-service:/app
       - assets:/app/assets
+    secrets:
+      - postgres_password
 
 volumes:
   assets:
