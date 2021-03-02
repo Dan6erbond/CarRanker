@@ -1,3 +1,5 @@
+#!/bin/sh
+
 cd app
 
 pip install -e .
