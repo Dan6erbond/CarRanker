@@ -12,7 +12,7 @@ def get_database_url():
     # Use Docker secrets configuration
     if os.getenv('POSTGRES_PASSWORD_FILE'):
         f = open(os.getenv('POSTGRES_PASSWORD_FILE'))
-        postgres_password = f.read()
+        postgres_password = f.readline()
         f.close()
 
     return f"postgresql://{os.getenv('POSTGRES_USER')}:{postgres_password}@localhost:5432/os.getenv('POSTGRES_DB')"
