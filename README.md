@@ -16,7 +16,7 @@ The scraped information will be normalized and stored in a PostgreSQL database t
 
 It consists of four services:
  - A PostgreSQL Database
- - A Python Processing Services for Machine Learning, Image Processing and webscraping
+ - A Python Processing Services for Machine Learning, Image Processing and Webscraping
  - A NestJS API using GraphQL
  - A VueJS Frontend
 
@@ -30,8 +30,8 @@ CarRanker uses Docker to spin up all the underlying services, after cloning the 
 
 ## Roadmap
 
- - Implement Python Machine Learning
- - Update Card Design
- - Implement NestJS API
- - Implement VueJS Frontend
- - Implement Auto-Scraper CRON Job
+ - [ ] Implement Python Machine Learning
+ - [ ] Update Card Design
+ - [ ] Implement NestJS API
+ - [ ] Implement VueJS Frontend
+ - [ ] Implement Auto-Scraper CRON Job
