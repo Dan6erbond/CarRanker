@@ -39,4 +39,4 @@ volumes:
 
 secrets:
   postgres_password:
-    file: ./docker_postgres_password.txt
+    file: ./docker_postgres_password
