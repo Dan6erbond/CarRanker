@@ -6,6 +6,10 @@
 ![NestJS](https://img.shields.io/badge/Vue-2.6-brightgreen?style=flat&logo=vue.js)
 ![NestJS](https://img.shields.io/badge/NestJS-7.5-E0234E?style=flat&logo=nestjs)
 
+- [CarRanker](#carranker)
+  - [Setup](#setup)
+  - [Roadmap](#roadmap)
+
 CarRanker is a work-in-progress fullstack web application with a Vue frontend to webscrape vehicle information from used car websites such as CarForYou and Tutti.
 
 The scraped information will be normalized and stored in a PostgreSQL database to aggregate listings, and users can rank cars based on various factors such as interior, exterior, reliability, cost to run (CTR), etc. The overall car rating will be used by a machine learning model to figure out which aspects a user values most, and automatically attempt to rank cars and scrape listings in the future.
