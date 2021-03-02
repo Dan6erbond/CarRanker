@@ -12,15 +12,17 @@ def get_database_url():
     # Use Docker secrets configuration
     if os.getenv('POSTGRES_PASSWORD_FILE'):
         f = open(os.getenv('POSTGRES_PASSWORD_FILE'))
-        postgres_password = f.readline()
+        postgres_password = f.readline().rstrip('\n')
         f.close()
 
-    return f"postgresql://{os.getenv('POSTGRES_USER')}:{postgres_password}@localhost:5432/os.getenv('POSTGRES_DB')"
+    postgres_host = os.getenv('POSTGRES_HOST') or "localhost"
+
+    return f"postgresql://{os.getenv('POSTGRES_USER')}:{postgres_password}@{postgres_host}:5432/{os.getenv('POSTGRES_DB')}"
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["DEBUG"] = True
+    app.config["DEBUG"] = bool(os.getenv("DEBUG"))
     app.config["SQLALCHEMY_DATABASE_URI"] = get_database_url()
 
     app.register_blueprint(api_v1)
