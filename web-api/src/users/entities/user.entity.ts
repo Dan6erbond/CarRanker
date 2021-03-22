@@ -7,7 +7,6 @@ import {
   Property,
 } from "@mikro-orm/core";
 import { RefreshToken } from "../../auth/entities/refresh-token.entity";
-import { Post } from "../../posts/entities/post.entity";
 
 @Entity({ tableName: "users" })
 export class User {
