@@ -26,9 +26,6 @@ export class User {
   @Property({ nullable: true })
   lastName: string;
 
-  @OneToMany(() => Post, (post) => post.author, { cascade: [Cascade.REMOVE] })
-  posts = new Collection<Post>(this);
-
   @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
     cascade: [Cascade.REMOVE],
   })
