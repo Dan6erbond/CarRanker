@@ -52,6 +52,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: car_ranker
       POSTGRES_HOST: db
+      JWT_KEY_FILE: /run/secrets/jwt_key
     depends_on:
       db:
         condition: service_healthy
@@ -64,6 +65,7 @@ services:
       - assets:/app/assets
     secrets:
       - postgres_password
+      - jwt_key
 
 volumes:
   assets:
@@ -71,3 +73,5 @@ volumes:
 secrets:
   postgres_password:
     file: ./docker_postgres_password
+  jwt_key:
+    file: ./docker_jwt_key
