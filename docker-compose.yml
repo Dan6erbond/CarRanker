@@ -61,8 +61,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./web-api:/app
-      - assets:/app/assets
+      - ./web-api:/usr/src/app
+      - assets:/usr/src/app/assets
     secrets:
       - postgres_password
       - jwt_key
