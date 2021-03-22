@@ -2,12 +2,12 @@ FROM node:15.12.0
 
 WORKDIR /usr/src/app/
 
+ENV NODE_ENV development
+
 COPY package.json .
 COPY yarn.lock .
 
 RUN yarn install
-
-RUN yarn global add rimraf request @nestjs/cli
 
 COPY . .
 
