@@ -39,6 +39,7 @@ services:
       - "5000:5000"
     volumes:
       - ./processing-service:/app
+      - processing_service_venv:/app/venv
       - assets:/app/assets
     secrets:
       - postgres_password
@@ -62,6 +63,7 @@ services:
       - "3000:3000"
     volumes:
       - ./web-api:/usr/src/app
+      - web_api_node_modules:/usr/src/app/node_modules
       - assets:/usr/src/app/assets
     secrets:
       - postgres_password
@@ -69,6 +71,8 @@ services:
 
 volumes:
   assets:
+  web_api_node_modules:
+  processing_service_venv:
 
 secrets:
   postgres_password:
