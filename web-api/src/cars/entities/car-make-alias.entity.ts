@@ -1,19 +1,16 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
-import { User } from "../../users/entities/user.entity";
+import { CarMake } from "./car-make.entity";
 
-@Entity({ tableName: "refresh_tokens" })
-export class RefreshToken {
+@Entity({ tableName: "make_aliases" })
+export class CarMakeAlias {
   @PrimaryKey()
   id: number;
 
-  @ManyToOne(() => User, { onDelete: "CASCADE", joinColumn: "user_id" })
-  user: User;
-
-  @Property({ name: "is_revoked" })
-  revoked = false;
-
   @Property()
-  expires: Date;
+  name: string;
+
+  @ManyToOne(() => CarMake, { joinColumn: "make_id", onDelete: "CASCADE" })
+  make: CarMake;
 
   @Property({ name: "date_created" })
   createdAt: Date = new Date();

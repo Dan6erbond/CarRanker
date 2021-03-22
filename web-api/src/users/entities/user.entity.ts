@@ -30,9 +30,9 @@ export class User {
   })
   refreshTokens = new Collection<RefreshToken>(this);
 
-  @Property()
+  @Property({ name: "date_created" })
   createdAt: Date = new Date();
 
-  @Property({ onUpdate: () => new Date() })
+  @Property({ name: "date_modified", onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 }
