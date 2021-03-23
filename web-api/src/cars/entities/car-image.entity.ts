@@ -1,4 +1,10 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import {
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
 import { Image } from "../../images/entities/image.entity";
 import { Car } from "./car.entity";
 
@@ -10,7 +16,7 @@ export class CarImage {
   @ManyToOne(() => Car, { joinColumn: "car_id" })
   car: Car;
 
-  @ManyToOne(() => Image, { joinColumn: "image_id" })
+  @OneToOne({ entity: () => Image, joinColumn: "image_id" })
   image: Image;
 
   @Property({ name: "date_created" })
