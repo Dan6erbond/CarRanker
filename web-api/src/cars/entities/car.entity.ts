@@ -74,25 +74,46 @@ export class Car {
   @Property({ nullable: true })
   consumptionCombined: number;
 
-  @ManyToOne(() => Image, { joinColumn: "exterior_front_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "exterior_front_image_id",
+    nullable: true,
+  })
   exteriorFrontImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "exterior_side_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "exterior_side_image_id",
+    nullable: true,
+  })
   exteriorSideImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "exterior_back_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "exterior_back_image_id",
+    nullable: true,
+  })
   exteriorBackImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "interior_front_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "interior_front_image_id",
+    nullable: true,
+  })
   interiorFrontImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "interior_dash_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "interior_dash_image_id",
+    nullable: true,
+  })
   interiorDashImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "interior_back_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "interior_back_image_id",
+    nullable: true,
+  })
   interiorBackImage: Image;
 
-  @ManyToOne(() => Image, { joinColumn: "interior_trunk_image_id" })
+  @ManyToOne(() => Image, {
+    joinColumn: "interior_trunk_image_id",
+    nullable: true,
+  })
   interiorTrunkImage: Image;
 
   @OneToMany(() => CarImage, (carImage) => carImage.car)
