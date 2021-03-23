@@ -7,36 +7,13 @@ import {
   Property,
 } from "@mikro-orm/core";
 import { Image } from "../../images/entities/image.entity";
+import { BodyType } from "../enums/body-type.enum";
+import { DriveType } from "../enums/drive-type.enum";
+import { FuelType } from "../enums/fuel-type.enum";
+import { TransmissionType } from "../enums/transmission-type.enum";
 import { CarImage } from "./car-image.entity";
 import { CarMake } from "./car-make.entity";
 import { CarScore } from "./car-score.entity";
-
-export enum TransmissionType {
-  AUTOMATIC = "automatic",
-  AUTOMATIC_CVT = "automatic_cvt",
-  MANUAL = "manual",
-}
-
-export enum FuelType {
-  GASOLINE = "gasoline",
-  DIESEL = "diesel",
-}
-
-export enum BodyType {
-  SEDAN = "sedan",
-  SUV = "suv",
-  MINIVAN = "minivan",
-  PICKUP = "pickup",
-  HATCHBACK = "hatchback",
-  COUPE = "coupe",
-  STATION_WAGON = "station_wagon",
-}
-
-export enum DriveType {
-  AWD = "awd",
-  FWD = "fwd",
-  RWD = "rwd",
-}
 
 @Entity({ tableName: "cars" })
 export class Car {
