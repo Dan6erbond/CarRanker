@@ -20,7 +20,7 @@ export class CarObject {
   @Field()
   variant: string;
 
-  @Field()
+  @Field({ nullable: true })
   fullType: string;
 
   @Field(() => Float)
@@ -29,13 +29,13 @@ export class CarObject {
   @Field(() => Int)
   horsePower: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   cylinders: number;
 
   @Field(() => Int)
   firstRegistrationYear: number;
 
-  @Field()
+  @Field({ nullable: true })
   firstRegistrationDate: Date;
 
   @Field(() => TransmissionType)
@@ -47,19 +47,19 @@ export class CarObject {
   @Field(() => BodyType)
   bodyType: BodyType;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   seats: number;
 
   @Field(() => Int)
   doors: number;
 
-  @Field(() => DriveType)
+  @Field(() => DriveType, { nullable: true })
   driveType: DriveType;
 
   @Field(() => Int)
   mileage: number;
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   consumptionCombined: number;
 
   @Field()
