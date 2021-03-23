@@ -26,10 +26,73 @@ type RegisterUserPayload {
   refreshToken: String!
 }
 
+type Car {
+  id: Int!
+  url: String!
+  model: String!
+  variant: String!
+  fullType: String!
+  price: Float!
+  horsePower: Int!
+  cylinders: Int!
+  firstRegistrationYear: Int!
+  firstRegistrationDate: DateTime!
+  transmissionType: TransmissionType!
+  fuelType: FuelType!
+  bodyType: BodyType!
+  seats: Int!
+  doors: Int!
+  driveType: DriveType!
+  mileage: Int!
+  consumptionCombined: Float!
+  data: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+Transmission type of vehicles, either automatic, CVT or manual gearboxes.
+"""
+enum TransmissionType {
+  AUTOMATIC
+  AUTOMATIC_CVT
+  MANUAL
+}
+
+"""Different fuel types used by vehicles."""
+enum FuelType {
+  GASOLINE
+  DIESEL
+}
+
+"""A car's body type, differentiates between sedans and hatchbacks."""
+enum BodyType {
+  SEDAN
+  SUV
+  MINIVAN
+  PICKUP
+  HATCHBACK
+  COUPE
+  STATION_WAGON
+}
+
+"""A vehicle's drivetrain, either AWD, FWD, or RWD."""
+enum DriveType {
+  AWD
+  FWD
+  RWD
+}
+
 type Query {
   users: [User!]!
   user(username: String, id: Int): User!
   me: User!
+  cars: [Car!]!
 }
 
 type Mutation {
