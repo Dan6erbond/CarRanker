@@ -31,20 +31,20 @@ type Car {
   url: String!
   model: String!
   variant: String!
-  fullType: String!
+  fullType: String
   price: Float!
   horsePower: Int!
-  cylinders: Int!
+  cylinders: Int
   firstRegistrationYear: Int!
-  firstRegistrationDate: DateTime!
+  firstRegistrationDate: DateTime
   transmissionType: TransmissionType!
   fuelType: FuelType!
   bodyType: BodyType!
-  seats: Int!
+  seats: Int
   doors: Int!
-  driveType: DriveType!
+  driveType: DriveType
   mileage: Int!
-  consumptionCombined: Float!
+  consumptionCombined: Float
   data: String!
   createdAt: DateTime!
   updatedAt: DateTime!
