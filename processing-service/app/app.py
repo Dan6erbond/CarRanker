@@ -6,16 +6,17 @@ from .database.db import db
 from .exts.ma import ma
 from .routes.api.v1 import blueprint as api_v1
 
+
 def get_database_url():
-    postgres_password = os.getenv('POSTGRES_PASSWORD')
+    postgres_password = os.getenv("POSTGRES_PASSWORD")
 
     # Use Docker secrets configuration
-    if os.getenv('POSTGRES_PASSWORD_FILE'):
-        f = open(os.getenv('POSTGRES_PASSWORD_FILE'))
-        postgres_password = f.readline().rstrip('\n')
+    if os.getenv("POSTGRES_PASSWORD_FILE"):
+        f = open(os.getenv("POSTGRES_PASSWORD_FILE"))
+        postgres_password = f.readline().rstrip("\n")
         f.close()
 
-    postgres_host = os.getenv('POSTGRES_HOST') or "localhost"
+    postgres_host = os.getenv("POSTGRES_HOST", "localhost")
 
     return f"postgresql://{os.getenv('POSTGRES_USER')}:{postgres_password}@{postgres_host}:5432/{os.getenv('POSTGRES_DB')}"
 
