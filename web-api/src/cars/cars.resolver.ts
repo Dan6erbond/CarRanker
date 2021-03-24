@@ -21,12 +21,7 @@ export class CarsResolver {
 
   @Query(() => [CarObject])
   cars(
-    @Selections([
-      {
-        field: "cars",
-        selections: [...carSelections],
-      },
-    ])
+    @Selections("cars", carSelections)
     relations: string[],
   ) {
     return this.carsService.findAll({ relations });
@@ -35,12 +30,7 @@ export class CarsResolver {
   @Mutation(() => CarObject)
   async submitCar(
     @Args("url") url: string,
-    @Selections([
-      {
-        field: "submitCar",
-        selections: [...carSelections],
-      },
-    ])
+    @Selections("submitCar", carSelections)
     relations: string[],
   ) {
     try {
