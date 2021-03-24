@@ -1,7 +1,12 @@
 import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Module } from "@nestjs/common";
+import { ProcessingModule } from "src/processing/processing.module";
+import { CarsResolver } from "./cars.resolver";
+import { CarsService } from "./cars.service";
 import { Car } from "./entities/car.entity";
-import { CarsResolver } from './cars.resolver';
 
-@Module({ imports: [MikroOrmModule.forFeature([Car])], providers: [CarsResolver] })
+@Module({
+  imports: [MikroOrmModule.forFeature([Car]), ProcessingModule],
+  providers: [CarsResolver, CarsService],
+})
 export class CarsModule {}

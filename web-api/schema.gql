@@ -26,6 +26,18 @@ type RegisterUserPayload {
   refreshToken: String!
 }
 
+type CarImage {
+  id: Int!
+  url: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Car {
   id: Int!
   url: String!
@@ -48,12 +60,8 @@ type Car {
   data: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  images: [CarImage!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 """
 Transmission type of vehicles, either automatic, CVT or manual gearboxes.
@@ -100,6 +108,7 @@ type Mutation {
   login(input: LoginUserInput!): LoginUserPayload!
   refreshToken(input: RefreshTokenInput!): RefreshTokenPayload!
   register(input: RegisterUserInput!): RegisterUserPayload!
+  submitCar(url: String!): Car!
 }
 
 input UpdateProfileInput {
