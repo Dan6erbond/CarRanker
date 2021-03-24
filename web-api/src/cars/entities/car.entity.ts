@@ -4,9 +4,9 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  PrimaryKey,
   Property,
 } from "@mikro-orm/core";
+import { BaseEntity } from "../../database/entities/base-entity.entity";
 import { Image } from "../../images/entities/image.entity";
 import { BodyType } from "../enums/body-type.enum";
 import { DriveType } from "../enums/drive-type.enum";
@@ -15,12 +15,8 @@ import { TransmissionType } from "../enums/transmission-type.enum";
 import { CarImage } from "./car-image.entity";
 import { CarMake } from "./car-make.entity";
 import { CarScore } from "./car-score.entity";
-
 @Entity({ tableName: "cars" })
-export class Car {
-  @PrimaryKey()
-  id: number;
-
+export class Car extends BaseEntity {
   @Property()
   url: string;
 
@@ -132,10 +128,4 @@ export class Car {
 
   @Property()
   data: string;
-
-  @Property({ name: "date_created" })
-  createdAt: Date = new Date();
-
-  @Property({ name: "date_modified", onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }

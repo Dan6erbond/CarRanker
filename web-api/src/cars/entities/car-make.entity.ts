@@ -1,19 +1,11 @@
-import {
-  Cascade,
-  Entity,
-  OneToMany,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/core";
+import { Cascade, Entity, OneToMany, Property } from "@mikro-orm/core";
 import { Collection } from "@mikro-orm/core/entity";
+import { BaseEntity } from "../../database/entities/base-entity.entity";
 import { CarMakeAlias } from "./car-make-alias.entity";
 import { Car } from "./car.entity";
 
 @Entity({ tableName: "makes" })
-export class CarMake {
-  @PrimaryKey()
-  id: number;
-
+export class CarMake extends BaseEntity {
   @Property()
   name: string;
 
@@ -24,10 +16,4 @@ export class CarMake {
     cascade: [Cascade.REMOVE],
   })
   aliases = new Collection<CarMakeAlias>(this);
-
-  @Property({ name: "date_created" })
-  createdAt: Date = new Date();
-
-  @Property({ name: "date_modified", onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }

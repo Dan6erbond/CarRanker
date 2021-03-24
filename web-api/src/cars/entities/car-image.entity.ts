@@ -1,27 +1,13 @@
-import {
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryKey,
-  Property,
-} from "@mikro-orm/core";
+import { Entity, ManyToOne, OneToOne } from "@mikro-orm/core";
+import { BaseEntity } from "../../database/entities/base-entity.entity";
 import { Image } from "../../images/entities/image.entity";
 import { Car } from "./car.entity";
 
 @Entity({ tableName: "cars_images" })
-export class CarImage {
-  @PrimaryKey()
-  id: number;
-
+export class CarImage extends BaseEntity {
   @ManyToOne(() => Car, { joinColumn: "car_id" })
   car: Car;
 
   @OneToOne({ entity: () => Image, joinColumn: "image_id" })
   image: Image;
-
-  @Property({ name: "date_created" })
-  createdAt: Date = new Date();
-
-  @Property({ name: "date_modified", onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }

@@ -1,18 +1,10 @@
-import {
-  Cascade,
-  Entity,
-  OneToMany,
-  PrimaryKey,
-  Property
-} from "@mikro-orm/core";
+import { Cascade, Entity, OneToMany, Property } from "@mikro-orm/core";
 import { Collection } from "@mikro-orm/core/entity";
+import { BaseEntity } from "../../database/entities/base-entity.entity";
 import { CarScore } from "./car-score.entity";
 
 @Entity({ tableName: "car_score_weights" })
-export class CarScoreWeight {
-  @PrimaryKey()
-  id: number;
-
+export class CarScoreWeight extends BaseEntity {
   @OneToMany(() => CarScore, (carScore) => carScore.weights, {
     cascade: [Cascade.REMOVE],
   })
@@ -35,10 +27,4 @@ export class CarScoreWeight {
 
   @Property({ name: "maintenance_score" })
   maintenance: number;
-
-  @Property({ name: "date_created" })
-  createdAt: Date = new Date();
-
-  @Property({ name: "date_modified", onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }

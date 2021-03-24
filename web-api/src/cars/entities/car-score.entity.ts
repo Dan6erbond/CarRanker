@@ -1,13 +1,11 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, ManyToOne, Property } from "@mikro-orm/core";
+import { BaseEntity } from "../../database/entities/base-entity.entity";
 import { User } from "../../users/entities/user.entity";
 import { CarScoreWeight } from "./car-score-weight.entity";
 import { Car } from "./car.entity";
 
 @Entity({ tableName: "car_scores" })
-export class CarScore {
-  @PrimaryKey()
-  id: number;
-
+export class CarScore extends BaseEntity {
   @ManyToOne(() => Car, { joinColumn: "car_id", onDelete: "CASCADE" })
   car: Car;
 
@@ -37,10 +35,4 @@ export class CarScore {
 
   @Property({ name: "maintenance_score" })
   maintenance: number;
-
-  @Property({ name: "date_created" })
-  createdAt: Date = new Date();
-
-  @Property({ name: "date_modified", onUpdate: () => new Date() })
-  updatedAt: Date = new Date();
 }
