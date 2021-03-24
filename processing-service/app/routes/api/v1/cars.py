@@ -8,7 +8,7 @@ from datetime import date, datetime
 import requests
 from app.database.models.car import BodyType, CarSchema, DriveType, FuelType, TransmissionType
 from bs4 import BeautifulSoup, Tag
-from flask_restplus import Resource, fields
+from flask_restplus import Resource, fields, abort
 
 from ....database.db import db
 from ....database.models import Car
@@ -127,9 +127,7 @@ class CarsController(Resource):
 
         car = Car.query.filter(Car.url == url).first()
         if car:
-            return {
-                "error": "This car has already been added to the database."
-            }
+            abort(400, "This car has already been added to the database.")
 
         data, raw_data, images = get_car_data(url)
 
