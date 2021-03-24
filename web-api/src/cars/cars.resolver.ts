@@ -20,18 +20,14 @@ export class CarsResolver {
   constructor(private carsService: CarsService) {}
 
   @Query(() => [CarObject])
-  cars(
-    @Selections("cars", carSelections)
-    relations: string[],
-  ) {
+  cars(@Selections("cars", carSelections) relations: string[]) {
     return this.carsService.findAll({ relations });
   }
 
   @Mutation(() => CarObject)
   async submitCar(
     @Args("url") url: string,
-    @Selections("submitCar", carSelections)
-    relations: string[],
+    @Selections("submitCar", carSelections) relations: string[],
   ) {
     try {
       const id = await this.carsService.scrapeCar(url);
