@@ -1033,7 +1033,7 @@
     camel-case "4.1.2"
     tslib "~2.1.0"
 
-"@graphql-tools/utils@^7.0.0", "@graphql-tools/utils@^7.1.2":
+"@graphql-tools/utils@^7.0.0":
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.7.0.tgz#71e575320720775c183009ed13f818b2952c7fbf"
   integrity sha512-gOfUzSkjUXG5c2xSAay9rdKEK5qxXn9pUcQuf25fXErWmUVJhtyB+gkwt+4h9p2EqBpwDyfhqhvzmSHcXLloJw==
@@ -1042,10 +1042,19 @@
     camel-case "4.1.2"
     tslib "~2.1.0"
 
-"@graphql-tools/utils@^7.0.1", "@graphql-tools/utils@^7.0.2", "@graphql-tools/utils@^7.1.0", "@graphql-tools/utils@^7.1.5", "@graphql-tools/utils@^7.1.6", "@graphql-tools/utils@^7.2.1", "@graphql-tools/utils@^7.2.4", "@graphql-tools/utils@^7.5.0":
+"@graphql-tools/utils@^7.0.1", "@graphql-tools/utils@^7.0.2", "@graphql-tools/utils@^7.1.0", "@graphql-tools/utils@^7.1.5", "@graphql-tools/utils@^7.1.6", "@graphql-tools/utils@^7.2.1", "@graphql-tools/utils@^7.2.4":
   version "7.5.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.5.0.tgz#8485d42eea0f723748dca4cc09344f032bd1e2fa"
   integrity sha512-8f//RSqHmKRdg9A3GHlZdxzlVfF/938ZD9edXLW7EriSABg1BXu3veru9W02VqORypArb2S/Tyeyvsk2gForqA==
+  dependencies:
+    "@ardatan/aggregate-error" "0.0.6"
+    camel-case "4.1.2"
+    tslib "~2.1.0"
+
+"@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.5.0":
+  version "7.7.1"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.7.1.tgz#81f32cb4819b34b3a378d51ab2cd60935977f0b4"
+  integrity sha512-SFT4/dTfrwWer1wSOLU+jqgv3oa/xTR8q+MiNbE9nCH2FXyMsqIOaXKm9wHfKIWFWHozqBdcnwFkQZrdD7H2TQ==
   dependencies:
     "@ardatan/aggregate-error" "0.0.6"
     camel-case "4.1.2"
@@ -1084,16 +1093,16 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@jenyus-org/graphql-utils@^1.3.0":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@jenyus-org/graphql-utils/-/graphql-utils-1.4.2.tgz#b64f8a315cb0e68674de648386548da421e325a3"
-  integrity sha512-kiwS1j6/X7xsoIe4hZKXBp3626hJXGJlusyZSk8bfkz8gwjhDyZO6PEzuxDAlfPh/BL0ZhmWwKJf36xu1cwC5g==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@jenyus-org/graphql-utils/-/graphql-utils-1.5.0.tgz#c102fa732ad56fa406094914c622c9d6997ae503"
+  integrity sha512-2H0uY62xqOQH8zXDKLnj8XQvh7G6aK9eChZHHyhT1a24j3+EOgJQSYhJuW+TwisQvX+bNTlt0ZCFyhcf6hZGpg==
   dependencies:
     graphql "^15.5.0"
 
 "@jenyus-org/nestjs-graphql-utils@^1.6.1":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@jenyus-org/nestjs-graphql-utils/-/nestjs-graphql-utils-1.6.3.tgz#973740ad7454a2b6aab8a6047ff17a4d24abae11"
-  integrity sha512-q1P5LiFMAtTfeBgUj7vwV6LFlMYPjfEU/dRPKNgzFCGyBbhcB4SpgWPX28CUosbWf2uZxXh/5HLbMKgV3qGETg==
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@jenyus-org/nestjs-graphql-utils/-/nestjs-graphql-utils-1.6.4.tgz#ff2eaeda01fe95176594eb58648b33a8b4ddf965"
+  integrity sha512-t0lXboXmcb4W2Px/EkCIW+XpYMGHG1BrLfIFX6dHX8gnrfe6+NXMaJba2F4ZOaoQZYW5HiJ0muyvMmwXMMx/+Q==
   dependencies:
     "@jenyus-org/graphql-utils" "^1.3.0"
     "@nestjs/common" "^7.6.12"
