@@ -29,7 +29,6 @@ export class CarsResolver {
     ])
     relations: string[],
   ) {
-    console.log(relations);
     return this.carsService.findAll({ relations });
   }
 
