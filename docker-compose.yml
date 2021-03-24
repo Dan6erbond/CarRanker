@@ -54,11 +54,13 @@ services:
       POSTGRES_DB: car_ranker
       POSTGRES_HOST: db
       JWT_KEY_FILE: /run/secrets/jwt_key
+      PROCESSING_SERVICE_HOST: processing-service
     depends_on:
       db:
         condition: service_healthy
     links:
       - db
+      - processing-service
     ports:
       - "3000:3000"
     volumes:

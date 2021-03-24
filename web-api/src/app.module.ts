@@ -9,6 +9,7 @@ import configuration from "./config/configuration";
 import { UsersModule } from "./users/users.module";
 import { CarsModule } from './cars/cars.module';
 import { ImagesModule } from './images/images.module';
+import { ProcessingModule } from './processing/processing.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ImagesModule } from './images/images.module';
     AuthModule,
     CarsModule,
     ImagesModule,
+    ProcessingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

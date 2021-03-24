@@ -13,5 +13,9 @@ export default () => {
     auth: {
       jwtKey,
     },
+    processingService: {
+      host: process.env.PROCESSING_SERVICE_HOST || "localhost",
+      port: process.env.PROCESSING_SERVICE_PORT || 5000,
+    },
   };
 };
