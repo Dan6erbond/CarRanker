@@ -39,6 +39,7 @@ services:
       - "5000:5000"
     volumes:
       - ./processing-service:/app
+      - processing_service_venv:/app/venv
       - assets:/app/assets
     secrets:
       - postgres_password
@@ -52,22 +53,31 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: car_ranker
       POSTGRES_HOST: db
+      JWT_KEY_FILE: /run/secrets/jwt_key
+      PROCESSING_SERVICE_HOST: processing-service
     depends_on:
       db:
         condition: service_healthy
     links:
       - db
+      - processing-service
     ports:
       - "3000:3000"
     volumes:
-      - ./web-api:/app
-      - assets:/app/assets
+      - ./web-api:/usr/src/app
+      - web_api_node_modules:/usr/src/app/node_modules
+      - assets:/usr/src/app/assets
     secrets:
       - postgres_password
+      - jwt_key
 
 volumes:
   assets:
+  web_api_node_modules:
+  processing_service_venv:
 
 secrets:
   postgres_password:
     file: ./docker_postgres_password
+  jwt_key:
+    file: ./docker_jwt_key

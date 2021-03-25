@@ -7,22 +7,7 @@ type User {
   username: String!
   firstName: String
   lastName: String
-  posts: [Post!]!
 }
-
-type Post {
-  id: Int!
-  title: String!
-  body: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  author: User!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type LoginUserPayload {
   user: User!
@@ -41,39 +26,95 @@ type RegisterUserPayload {
   refreshToken: String!
 }
 
+type CarImage {
+  id: Int!
+  url: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Car {
+  id: Int!
+  url: String!
+  model: String!
+  variant: String!
+  fullType: String
+  price: Float!
+  horsePower: Int!
+  cylinders: Int
+  firstRegistrationYear: Int!
+  firstRegistrationDate: DateTime
+  transmissionType: TransmissionType!
+  fuelType: FuelType!
+  bodyType: BodyType!
+  seats: Int
+  doors: Int!
+  driveType: DriveType
+  mileage: Int!
+  consumptionCombined: Float
+  data: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  images: [CarImage!]!
+}
+
+"""
+Transmission type of vehicles, either automatic, CVT or manual gearboxes.
+"""
+enum TransmissionType {
+  AUTOMATIC
+  AUTOMATIC_CVT
+  MANUAL
+}
+
+"""Different fuel types used by vehicles."""
+enum FuelType {
+  GASOLINE
+  DIESEL
+}
+
+"""A car's body type, differentiates between sedans and hatchbacks."""
+enum BodyType {
+  SEDAN
+  SUV
+  MINIVAN
+  PICKUP
+  HATCHBACK
+  COUPE
+  STATION_WAGON
+}
+
+"""A vehicle's drivetrain, either AWD, FWD, or RWD."""
+enum DriveType {
+  AWD
+  FWD
+  RWD
+}
+
 type Query {
   users: [User!]!
   user(username: String, id: Int): User!
   me: User!
-  posts: [Post!]!
-  post(id: Int!): Post!
+  cars: [Car!]!
 }
 
 type Mutation {
   updateProfile(input: UpdateProfileInput!): User!
-  createPost(input: CreatePostInput!): Post!
-  updatePost(input: UpdatePostInput!): Post!
-  deletePost(id: Int!): Boolean!
   login(input: LoginUserInput!): LoginUserPayload!
   refreshToken(input: RefreshTokenInput!): RefreshTokenPayload!
   register(input: RegisterUserInput!): RegisterUserPayload!
+  submitCar(url: String!): Car!
 }
 
 input UpdateProfileInput {
   username: String
   firstName: String
   lastName: String
-}
-
-input CreatePostInput {
-  title: String!
-  body: String!
-}
-
-input UpdatePostInput {
-  id: Int!
-  title: String
-  body: String
 }
 
 input LoginUserInput {

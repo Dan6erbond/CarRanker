@@ -1,17 +1,7 @@
 import { Selections } from "@jenyus-org/nestjs-graphql-utils";
 import { UseGuards } from "@nestjs/common";
-import {
-  Args,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from "@nestjs/graphql";
+import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UserInputError } from "apollo-server-express";
-import { PostObject } from "src/posts/dto/post.object";
-import { PostsService } from "src/posts/posts.service";
 import { GqlCurrentUser } from "../auth/decorator/gql-current-user.decorator";
 import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
 import { UpdateProfileInput } from "./dto/update-profile.input";
@@ -21,10 +11,7 @@ import { UsersService } from "./users.service";
 
 @Resolver(() => UserObject)
 export class UsersResolver {
-  constructor(
-    private readonly usersService: UsersService,
-    private postsService: PostsService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [UserObject])
   users(@Selections("users", ["posts"]) relations: string[]) {
@@ -56,14 +43,5 @@ export class UsersResolver {
   @UseGuards(GqlAuthGuard)
   me(@GqlCurrentUser() user: User) {
     return user;
-  }
-
-  @ResolveField(() => [PostObject])
-  async posts(@Parent() user: User) {
-    if (user.posts.isInitialized()) {
-      return user.posts;
-    }
-    const { id } = user;
-    return this.postsService.findAll({ authorId: id });
   }
 }

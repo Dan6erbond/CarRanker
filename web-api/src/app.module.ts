@@ -7,6 +7,9 @@ import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import configuration from "./config/configuration";
 import { UsersModule } from "./users/users.module";
+import { CarsModule } from './cars/cars.module';
+import { ImagesModule } from './images/images.module';
+import { ProcessingModule } from './processing/processing.module';
 
 @Module({
   imports: [
@@ -21,6 +24,9 @@ import { UsersModule } from "./users/users.module";
     }),
     UsersModule,
     AuthModule,
+    CarsModule,
+    ImagesModule,
+    ProcessingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
