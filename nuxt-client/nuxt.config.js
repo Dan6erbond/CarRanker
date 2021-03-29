@@ -44,4 +44,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Watch Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-watchers
+  watchers: {
+    webpack: {
+      poll: true,
+    },
+  },
 }
