@@ -70,11 +70,26 @@ services:
     secrets:
       - postgres_password
       - jwt_key
+  nuxt-client:
+    restart: always
+    build:
+      context: ./nuxt-client
+      dockerfile: Dockerfile
+    environment:
+      WEB_API_HOST: web-api
+    links:
+      - web-api
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./nuxt-client:/usr/src/app
+      - nuxt_client_node_modules:/usr/src/app/node_modules
 
 volumes:
   assets:
   web_api_node_modules:
   processing_service_venv:
+  nuxt_client_node_modules:
 
 secrets:
   postgres_password:
