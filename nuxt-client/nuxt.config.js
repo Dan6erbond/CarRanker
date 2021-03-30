@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "nuxt-client",
+    title: "CarRanker",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -12,6 +12,12 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
+
+  // Environment variables: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-env/
+  env: {
+    webApiHost: process.env.WEB_API_HOST || "localhost",
+    webApiPort: process.env.WEB_API_PORT || 3000,
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -33,6 +39,8 @@ export default {
     "@nuxtjs/emotion",
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
+    // https://github.com/nuxt-community/apollo-module
+    "@nuxtjs/apollo",
   ],
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -49,6 +57,13 @@ export default {
   watchers: {
     webpack: {
       poll: true,
+    },
+  },
+
+  // Apollo Configuration: https://github.com/nuxt-community/apollo-module
+  apollo: {
+    clientConfigs: {
+      default: "~/plugins/apollo-config.ts",
     },
   },
 };
